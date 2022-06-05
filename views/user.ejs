@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("./blocks/head.ejs")%>
+<body>
+<!-- header section starts  -->
+<%- include("./blocks/header-user.ejs") %>
+<!-- header section ends -->
+<%- include("./pages/"+ page +".ejs")%>
+<!-- bottom navbar  -->
+<%- include("./blocks/footer.ejs")%>
+<script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
+<!-- custom js file link  -->
+<script src="js/script.js"></script>
+
+</body>
+</html>

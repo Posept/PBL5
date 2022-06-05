@@ -1,0 +1,102 @@
+<!--
+=========================================================
+* Material Dashboard 2 - v3.0.2
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/material-dashboard
+* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://www.creative-tim.com/license)
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="http://localhost:3000"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+        Sign in
+    </title>
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+    <!-- Nucleo Icons -->
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <!-- CSS Files -->
+    <link id="pagestyle" href="css/login.css" rel="stylesheet" />
+</head>
+
+<body class="bg-gray-200">
+<section class="forms-section">
+    <h1 class="section-title">PBL5</h1>
+    <div class="forms">
+        <div class="form-wrapper is-active">
+            <button type="button" class="switcher switcher-login">
+                Login
+                <span class="underline"></span>
+            </button>
+            <form class="form form-login" method="post">
+                <fieldset>
+                    <legend>Please, enter your username and password for login.</legend>
+                    <div class="input-block">
+                        <label for="login-username">User name</label>
+                        <input id="login-username" type="text" required name="txtUser">
+                    </div>
+                    <div class="input-block">
+                        <label for="login-password">Password</label>
+                        <input id="login-password" type="password" required name="txtPassword">
+                    </div>
+                </fieldset>
+                <button type="submit" class="btn-login">Login</button>
+            </form>
+        </div>
+        <div class="form-wrapper">
+            <button type="button" class="switcher switcher-signup">
+                Sign Up
+                <span class="underline"></span>
+            </button>
+            <form class="form form-signup" method="post">
+                <fieldset>
+                    <legend>Please, enter your username, password and password confirmation for sign up.</legend>
+                    <div class="input-block">
+                        <label for="signup-text">User name</label>
+                        <input id="signup-text" type="text" required name="txtUsername">
+                    </div>
+                    <div class="input-block">
+                        <label for="signup-name">Name</label>
+                        <input id="signup-name" type="text" required name="txtName" >
+                    </div>
+                    <div class="input-block">
+                        <label for="signup-password">Password</label>
+                        <input id="signup-password" type="password" required name="txtPasswordsignup">
+                    </div>
+                    <div class="input-block">
+                        <label for="signup-password-confirm">Confirm password</label>
+                        <input id="signup-password-confirm" type="password" required>
+                    </div>
+                    <div class="input-block">
+                        <label for="signup-address">Address</label>
+                        <input id="signup-address" type="text" required name="txtAddress">
+                    </div>
+                    <div class="input-block">
+                        <label for="signup-phone">Phone number</label>
+                        <input id="signup-phone" type="text" required name="txtPhone">
+                    </div>
+                </fieldset>
+                <button type="submit" class="btn-signup">Continue</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script src="js/login.js"></script>
+</body>
+
+</html>
