@@ -3401,6 +3401,52 @@ textarea.form-control.is-valid {
   border-color: #66d432;
 }
 
+.form_dang_nhap .o_nhap input:focus ~ label,
+.form_dang_nhap .o_nhap input:valid ~ label {
+  top:-1.5rem;
+  left:0;
+  color:#03a9f4;
+  font-size:0.8rem;
+}
+.form_dang_nhap input[type="submit"] {
+  background: transparent;
+  border:none;
+  outline: none;
+  color:#fff;
+  background: #D81B60 ;
+  padding: 1rem 1.5rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+}
+
+.form_dang_nhap .o_nhap label {
+  position: absolute;
+  top:0;
+  left:0;
+  font-size: 1.2rem;
+  padding: 0.8rem 0;
+  color:#000;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.form_dang_nhap .o_nhap{
+  position: relative;
+}
+.form_dang_nhap .o_nhap input{
+  position: relative;
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 0.8rem 0;
+  color:#000;
+  margin-bottom:2rem;
+  border:none;
+  border-bottom:1px solid #fff;
+  outline: none;
+  background: transparent;
+}
+
 .was-validated .form-check-input:valid:checked,
 .form-check-input.is-valid:checked {
   background-color: #66d432;

@@ -1,8 +1,8 @@
 var express = require("express");
 var bodyParser = require("body-parser");
+var fs = require('fs');
+var path = require('path');
 var app = express();
-let alert = require('alert');
-
 app.use(bodyParser.urlencoded({extends:false}));
 
 app.set("view engine","ejs");
@@ -41,28 +41,36 @@ app.use(session({
 }));
 //Models
 const Category = require("./Models/Category");
+const Book = require("./Models/Book");
 const User = require("./Models/Users");
+var Name="";
+var Upload = 0;
 
-
-app.get("/category",function (req,res){
-    var cate = new Category({
-        title: "C#",
-        ordering : 1,
-        active : 1,
-        books_id : []
-    });
-    cate.save(function (err){
-        if(err){
-            console.log("Save category error");
-            res.json({ks: 0});
+//Upload
+var multer = require('multer');
+var storage = multer.diskStorage({
+    destination: function (req,file,cb) {
+        cb(null, 'public/upload')
+    },
+    filename: function (req,file,cb) {
+        cb(null,Date.now() + "."+ file.originalname)
+    }
+});
+var upload = multer({
+    storage : storage,
+    fileFilter: function (req,file,cb) {
+        console.log(file);
+        if( file.mimetype=="image/bmp" ||
+            file.mimetype=="image/png" ||
+            file.mimetype=="image/gif" ||
+            file.mimetype=="image/jpg" ||
+            file.mimetype=="image/jpeg" ){
+            cb(null,true)
+        }else{
+            return cb(new Error('Only image are allowed!'))
         }
-        else {
-            console.log("Save category successfully" + cate._id);
-            res.json({ks: 1});
-        }
-    });
-})
-
+    }
+}).single("fileImage");
 
 app.get("/login",function (req,res){
     res.render("login");
@@ -73,7 +81,7 @@ app.post("/login",function (req,res){
         if(!err && item !=null){
             bcrypt.compare(req.body.txtPassword,item.password,function (err2,res2){
                 if(res2==false){
-                    alert("Password wrong !");
+                    res.render("login",{message:"Password wrong"});
                 }else{
                     jwt.sign(item.toJSON(),secret,{expiresIn: '168h'},function (err,token){
                         if(err){
@@ -81,6 +89,7 @@ app.post("/login",function (req,res){
                         }
                         else{
                             req.session.token = token;
+                            Name = item.name;
                             res.redirect("http://localhost:3000/");
                         }
                     });
@@ -88,7 +97,7 @@ app.post("/login",function (req,res){
             });
         }else{
             if(item==null){
-                alert("Username khong ton tai !");
+                res.render("login",{message:"Username does not exist"});
             }
         }
     })}
@@ -108,13 +117,13 @@ app.post("/login",function (req,res){
                 if(err) {
                     res.json({kq : 0});
                 } else {
-                    res.redirect("http://localhost:3000/login");
+                    res.render("login",{message:"Create Account Success"});
                 }
             });
         });
         return;}
         else{
-            alert("Username đã tồn tại !");
+            res.render("login",{message:"Username already exist"});
         }})
 
     }
@@ -122,20 +131,132 @@ app.post("/login",function (req,res){
 
 
 app.get("/admin/:p",function (req,res){
-    res.render("admin",{page : req.params.p});
+    if(req.params.p=="category"){
+        Category.find(function (err,items){
+            if(err){
+                res.render("admin",{page : req.params.p,list:[]});
+            }else {
+                res.render("admin",{page : req.params.p,list:items});
+            }
+        })
+    }
+    else{
+        if(req.params.p=="book"){
+            Category.find(function (err,items){
+                if(err){
+                    res.render("admin",{page :"book",list:[]});
+                }else{
+                    if(Upload!=1){
+                        res.render("admin",{page :"book",list:items});
+                    }else{
+                        Upload =0;
+                        res.render("admin",{page :"book",list:items,message:"Upload successfully"});
+                    }
+
+                }
+            })
+        }
+        else{
+            res.render("admin",{page : req.params.p});
+        }
+    }
 })
 
+app.get("/image",function (req,res){
+    Book.find(function (err,items){
+        if(err){
+            console.log("Error");
+        }
+        else{
+            res.render('imagesPage', { items: items });
+        }
+    })
+})
+
+app.post("/admin/:p",function (req,res){
+    if(req.params.p=="category") {
+        var cate = new Category({
+            title: req.body.txtTitle,
+            ordering : req.body.txtOrder,
+            active : 1,
+            books_id : []
+        });
+        cate.save(function (err){
+            if(err){
+                console.log("Save category error");
+                Category.find(function (err,items){
+                    if(err){
+                        res.render("admin",{page : req.params.p,list:[]});
+                    }else {
+                        res.render("admin",{page : req.params.p,message:"Save category error",list:items});
+                    }
+                })
+            }
+            else {
+                console.log("Save category success");
+                Category.find(function (err,items){
+                    if(err){
+                        res.render("admin",{page : req.params.p,list:[]});
+                    }else {
+                        res.render("admin",{page : req.params.p,message:"Save category successfully",list:items});
+                    }
+                })
+            }
+        });
+        return;
+    }
+    if(req.params.p == "book"){
+        upload(req,res,function (err) {
+            if(err instanceof multer.MulterError){
+                console.log("A Multer error occurred when uploading.")
+                res.json({kq:0})
+            } else if(err){
+                console.log("An unknown error occurred when uploading.")
+                res.json({kq:0})
+            }else{
+                console.log("Upload is okay");
+                console.log(req.file);
+                var book = new Book({
+                    title : req.body.txtTitle,
+                    img: {
+                        data: fs.readFileSync(path.join(__dirname + '/public/upload/' + req.file.filename)),
+                        contentType: 'image/png'
+                    },
+                    description :req.body.txtPdfurl,
+                    ordering : req.body.txtOrder,
+                    active : 1
+                });
+                book.save(function (err){
+                    if(err){
+                        res.json({kq:0})
+                    }else{
+                        Category.findOneAndUpdate({_id:req.body.selectCate},{$push :{books_id:book._id}},function (err){
+                            if(err){
+                                res.json({kq:0})
+                            }else{
+                                console.log("Update book okay");
+                                Upload = 1;
+                                res.redirect("/admin/book");
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    }
+})
 
 app.get("/page/:p",function (req, res){
     res.render("page_black",{page :req.params.p});
 })
 
 app.get("/user/:p",function (req, res){
-    res.render("user",{page :req.params.p});
+    res.render("user",{page :req.params.p,message:Name});
 })
 
 app.get("/signout",function (req,res){
     req.session.token ="";
+    Name = "";
     res.redirect("http://localhost:3000/");
 })
 
@@ -146,10 +267,16 @@ app.get("/",function (req,res){
                 res.redirect("https://localhost:3000/login");
             }else{
                 if(decoded.level == 3) {
-                    res.render("admin",{page : "category"});
+                    Category.find(function (err,items){
+                        if(err){
+                            res.render("admin",{page :"category",list:[]});
+                        }else {
+                            res.render("admin",{page :"category",list:items});
+                        }
+                    })
                 }
                 else{
-                    res.render("user",{page :"home"});
+                    res.render("user",{page :"home",message:Name});
                 }
             }
         });
@@ -157,6 +284,9 @@ app.get("/",function (req,res){
         res.redirect("http://localhost:3000/page/home");
     }
 })
+
+
+
 
 app.get("/404",function (req, res){
     res.render("404");

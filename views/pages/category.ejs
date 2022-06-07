@@ -1,38 +1,74 @@
-<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg "
+      xmlns="http://www.w3.org/1999/html">
 <div class="container-fluid py-4">
     <div class="row min-vh-80">
         <div class="col-12">
             <div class="card mt-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                        <h6 class="text-white text-capitalize ps-3">Material Dashboard Heading</h6>
-                        <p class="mb-0 text-white ps-3">Created using Roboto Slab Font Family
-                        </p>
+                        <h1 class="text-white text-capitalize ps-3">Category</h1>
                     </div>
                 </div>
                 <div class="card-body px-5">
-                    <h1>h1. Bootstrap heading</h1>
-                    <h2>h2. Bootstrap heading</h2>
-                    <h3>h3. Bootstrap heading</h3>
-                    <h4>h4. Bootstrap heading</h4>
-                    <h5>h5. Bootstrap heading</h5>
-                    <h6>h6. Bootstrap heading</h6>
-                    <p>You can use the mark tag to <mark>highlight</mark> text.</p>
-                    <p><del>This line of text is meant to be treated as deleted text.</del></p>
-                    <p><s>This line of text is meant to be treated as no longer accurate.</s></p>
-                    <p><ins>This line of text is meant to be treated as an addition to the document.</ins></p>
-                    <p><u>This line of text will render as underlined</u></p>
-                    <p><small>This line of text is meant to be treated as fine print.</small></p>
-                    <p><strong>This line rendered as bold text.</strong></p>
-                    <p><em>This line rendered as italicized text.</em></p>
-                    <figure>
-                        <blockquote class="blockquote">
-                            <p class="ps-2">Because I’m here to follow my dreams and inspire other people to follow their dreams, too.</p>
-                        </blockquote>
-                        <figcaption class="blockquote-footer ps-3">
-                            Someone famous in <cite title="Source Title">Source Title</cite>
-                        </figcaption>
-                    </figure>
+
+                    <form class="form_dang_nhap" method="post">
+                        <div class="o_nhap">
+                            <input type="text" name="txtTitle" required="">
+                            <label>Title</label>
+                        </div>
+                        <div class="o_nhap">
+                            <input type="number" name="txtOrder" required="">
+                            <label>Order</label>
+                        </div>
+                        <input type="submit" name="" value="Add new category">
+                    </form>
+
+                    <% if(typeof message!= "undefined") {%><h2><%- message%></h2><%} %>
+
+                    <div class="card-body px-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Order</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Title</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Active</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Books</th>
+                                    <th class="text-secondary opacity-7"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% list.forEach(function (cat){ %>
+                                <tr>
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">#<%- cat._id%></p>
+                                    </td>
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0"><%- cat.title%></p>
+                                    </td>
+                                    <td class="align-middle text-center text-sm">
+                                        <span class="badge badge-sm bg-gradient-success"><% if(cat.active==1){
+                                            %>Show<%}else{%>Hide<%
+                                            } %></span>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="text-secondary text-xs font-weight-bold"></span>
+                                    </td>
+                                    <td class="align-middle">
+                                        <a href="#" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete">
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                                <%});%>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+
+
+
                 </div>
             </div>
         </div>

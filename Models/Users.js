@@ -5,7 +5,8 @@ const userSchema = new mongoose.Schema({
     level : Number,
     name : String,
     address : String,
-    phone : String
+    phone : String,
+    books_order_id : [{type: mongoose.Schema.Types.ObjectId}]
 });
 
 module.exports = mongoose.model("User",userSchema);

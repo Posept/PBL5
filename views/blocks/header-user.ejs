@@ -8,13 +8,13 @@
             <input type="search" name="" placeholder="search here..." id="search-box">
             <label for="search-box" class="fas fa-search"></label>
         </form>
-
         <div class="icons">
-            <div id="search-btn"  class="fas fa-search"></div>
             <a href="user/heart" class="fas fa-heart"></a>
             <a href="user/cart" class="fas fa-shopping-cart"></a>
+            <a><% if(typeof message!= "undefined") {%><%- message%><%} %></a>
             <a href="/signout" class="fa fa-sign-out"></a>
         </div>
+
 
     </div>
 

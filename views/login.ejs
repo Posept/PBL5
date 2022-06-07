@@ -54,7 +54,9 @@
                         <input id="login-password" type="password" required name="txtPassword">
                     </div>
                 </fieldset>
+                <% if(typeof message!= "undefined") {%><h5><%- message%></h5><%} %>
                 <button type="submit" class="btn-login">Login</button>
+
             </form>
         </div>
         <div class="form-wrapper">
