@@ -1,0 +1,14 @@
+<div xmlns="http://www.w3.org/1999/html">
+    <div>
+        <h2><%= item.title %></h2>
+        <img src="data:image/<%=item.img.contentType%>;base64,
+                     <%=item.img.data.toString('base64')%>">
+        <div>
+            <h5><%= item.name %></h5>
+            <p><%= item.desc %></p>
+        </div>
+        <h2>Description</br><%= item.description %></h2>
+        <h2>Ordering</br><%= item.ordering %></h2>
+        <h2>Active</br><%= item.active %></h2>
+    </div>
+</div>

@@ -1,1 +1,12 @@
-<h1>Heart</h1>
+<% list.forEach(function(image) { %>
+    <a href="page/detail/<%= image._id %>" class="swiper-slide box">
+        <div class="image">
+            <img src="data:image/<%=image.img.contentType%>;base64,
+                     <%=image.img.data.toString('base64')%>">
+        </div>
+        <div class="content">
+            <h3><%= image.title %></h3>
+            <div class="price">$<%= image.cost %><span>$<%= image.cost+5%></span></div>
+        </div>
+    </a>
+<% }) %>

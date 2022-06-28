@@ -12,16 +12,18 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <% list.forEach(function(image) { %>
                     <tr>
-                        <td class="align-middle"><img src="image/sp1.1.jpg" alt="" width="100px"></td>
-                        <td class="align-middle"><span>Tâm Lý Học - Phác Họa Chân Dung Kẻ Phạm
-                                                Tội</span></td>
-                        <td class="align-middle"><input style="width: 100px" type="number" value="1"
+                        <td class="align-middle"><img src="data:image/<%=image.img.contentType%>;base64,
+                                                    <%=image.img.data.toString('base64')%>"></td>
+                        <td class="align-middle"><%= image.title %></td>
+                        <td class="align-middle"><input style="width: 100px" name="soluong" type="number" value="1"
                                                         min="1">
                         </td>
-                        <td class="align-middle"><span style="width: 100px">95.700 ₫</span></td>
-                        <td class="align-middle"><button class="btn"><i class="bi bi-trash-fill"></i></button></td>
+                        <td class="align-middle">$<%= image.cost %></td>
+                        <td class="align-middle"><button class="btn"><i class="fa fs-trash-fill"></i></button></td>
                     </tr>
+                    <% }) %>
                     </tbody>
 
                 </table>
@@ -34,9 +36,11 @@
                     </tr>
                     </thead>
                     <tbody>
+
                     <tr>
                         <td>Tong tien</td>
-                        <td>191.500 ₫</td>
+                        
+                        <td></td>
                     </tr>
                     <tr>
                         <td>Phi van chuyen</td>

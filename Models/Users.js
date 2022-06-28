@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
     name : String,
     address : String,
     phone : String,
+    book_heart_id: [{type: mongoose.Schema.Types.ObjectId}],
     books_order_id : [{type: mongoose.Schema.Types.ObjectId}]
 });
 

@@ -8,6 +8,7 @@ const bookSchema = new mongoose.Schema({
             contentType: String
         },
     description : String,
+    cost : Number,
     ordering : Number,
     active : Number
 })
